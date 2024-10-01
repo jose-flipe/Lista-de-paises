@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Países</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Escolha um País</h1>
+
+        <label for="continenteSelect">Filtrar por continente:</label>
+        <select id="continenteSelect">
+            <option value="all">Todos os continentes</option>
+            <option value="Africa">África</option>
+            <option value="Americas">Américas</option>
+            <option value="Asia">Ásia</option>
+            <option value="Europe">Europa</option>
+            <option value="Oceania">Oceania</option>
+        </select>
+
+        <ul id="listaPaises" class="lista-paises"></ul>
+
+        <div id="resultado" class="resultado">
+            <h2>Informações do País</h2>
+            <p><strong>País:</strong> <span id="nomePais"></span></p>
+            <p><strong>Capital:</strong> <span id="capitalPais"></span></p>
+            <p><strong>População:</strong> <span id="populacaoPais"></span></p>
+            <p><strong>Região:</strong> <span id="regiaoPais"></span></p>
+            <p><strong>Bandeira:</strong></p>
+            <img id="bandeiraPais"/>
+        </div>
+
+        <div>
+            <h2>Países Favoritos</h2>
+            <ul id="listaFavoritos" class="lista-favoritos"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
