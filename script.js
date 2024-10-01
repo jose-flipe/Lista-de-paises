@@ -21,14 +21,49 @@ function listarPaises(continente = 'all') {
                 li.append(botaoFavoritar);
                 listaPaises.appendChild(li);
             });
+function favoritarPais(pais) {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    if (!favoritos.some(favorito => favorito.name.common === pais.name.common)) {
+        favoritos.push(pais);
+        localStorage.setItem('favoritos', JSON.stringify(favoritos));
+        atualizarListaFavoritos();
+    } else {
+        alert('Esse país já está nos favoritos.');
+    }
+}
+            
+function atualizarListaFavoritos() {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    const listaFavoritos = document.getElementById('listaFavoritos');
+    listaFavoritos.innerHTML = '';
+            
+    favoritos.forEach(pais => {
+        const li = document.createElement('li');
+        li.textContent = pais.name.common;
+            
+        const botaoRemover = document.createElement('button');
+        botaoRemover.textContent = 'Remover';
+        botaoRemover.onclick = () => removerFavorito(pais);
+            
+        li.appendChild(botaoRemover);
+        listaFavoritos.appendChild(li);
+    });
+}
+            
+function removerFavorito(pais) {
+    let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+    favoritos = favoritos.filter(favorito => favorito.name.common !== pais.name.common);
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+    atualizarListaFavoritos();
+}
 
-            if (paisesAleatorios.length === 0) {
-                listaPaises.innerHTML = '<li>Nenhum país encontrado nesse continente.</li>';
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao listar países:', error);
-        });
+if (paisesAleatorios.length === 0) {
+    listaPaises.innerHTML = '<li>Nenhum país encontrado nesse continente.</li>';
+}
+    })
+    .catch(error => {
+        console.error('Erro ao listar países:', error);
+    });
 }
 
 function mostrarDetalhesPais(paisNome) {
@@ -47,41 +82,6 @@ function mostrarDetalhesPais(paisNome) {
         });
 }
 
-function favoritarPais(pais) {
-    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-    if (!favoritos.some(favorito => favorito.name.common === pais.name.common)) {
-        favoritos.push(pais);
-        localStorage.setItem('favoritos', JSON.stringify(favoritos));
-        atualizarListaFavoritos();
-    } else {
-        alert('Esse país já está nos favoritos.');
-    }
-}
-
-function atualizarListaFavoritos() {
-    const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-    const listaFavoritos = document.getElementById('listaFavoritos');
-    listaFavoritos.innerHTML = '';
-
-    favoritos.forEach(pais => {
-        const li = document.createElement('li');
-        li.textContent = pais.name.common;
-
-        const botaoRemover = document.createElement('button');
-        botaoRemover.textContent = 'Remover';
-        botaoRemover.onclick = () => removerFavorito(pais);
-
-        li.appendChild(botaoRemover);
-        listaFavoritos.appendChild(li);
-    });
-}
-
-function removerFavorito(pais) {
-    let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-    favoritos = favoritos.filter(favorito => favorito.name.common !== pais.name.common);
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
-    atualizarListaFavoritos();
-}
 
 document.getElementById('continenteSelect').addEventListener('change', (event) => {
     const continenteSelecionado = event.target.value;
